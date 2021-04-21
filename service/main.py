@@ -5,12 +5,19 @@
 # @EMAIL: Jtyoui@qq.com
 # @Notes : restFul接口
 from fastapi import FastAPI, Query
-
+from fastapi.middleware.cors import CORSMiddleware
 from operateES import delete_index, create_index, batch_data
 from operateNeo4j import init_neo4j
 from service import *
 
 app = FastAPI(title='回答系统接口', description='专业植物病理回答系统', version='1.0')
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get('/wss/createMysql', summary='初始化MYSQL数据库和表结构')
